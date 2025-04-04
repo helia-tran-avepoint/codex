@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "webui"
+version = "0.1.0"
+description = ""
+authors = ["ce.liu <ce.liu@avepoint.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.32.3"
+streamlit = "^1.40.2"
+graphviz = "^0.20.3"
+uvicorn = "^0.32.1"
+python-dotenv = "^1.0.1"
+pydantic = "^2.10.4"
+pydantic-settings = "^2.7.1"
+streamlit-agraph = "^0.0.45"
+streamlit-javascript = "^0.1.5"
+nebula3-python = "^3.8.3"
+
+[isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,64 @@
+version: "3.9"
+services:
+  # neo4j:
+  #   image: neo4j:5.12
+  #   container_name: neo4j
+  #   ports:
+  #     - "7474:7474"
+  #     - "7687:7687"
+  #   environment:
+  #     - NEO4J_AUTH=neo4j/password
+  #   volumes:
+  #     - ./neo4j/data:/data
+  #     - ./neo4j/logs:/logs
+  #     - ./neo4j/import:/import
+
+  webui:
+    volumes:
+      - ./webui:/app
+    env_file:
+      - .env.dev
+    # command: uvicorn webui.app:app --reload --host 0.0.0.0 --port 8501
+
+  agent_service:
+    volumes:
+      - ./agent_service:/app
+    env_file:
+      - .env.dev
+    # command: uvicorn agent_service.app:app --reload --host 0.0.0.0 --port 8001
+
+  
+  index_service:
+    volumes:
+      - ./index_service:/app
+    env_file:
+      - .env.dev
+    # command: uvicorn index_service.app:app --reload --host 0.0.0.0 --port 8002
+
+
+  # python:
+  #   build:
+  #     context: ./backend
+  #   container_name: web
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ./sqlite:/app/sqlite
+  #   depends_on:
+  #     - neo4j
+
+  # llm:
+  #   build:
+  #     context: ./llm
+  #   container_name: llm_service
+  #   ports:
+  #     - "8501:8501"
+
+  # csharp:
+  #   build:
+  #     context: ./csharp
+  #   container_name: csharp_service
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - backend

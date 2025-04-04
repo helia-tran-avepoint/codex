@@ -1,0 +1,65 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "WebUI",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/webui/startup.py",
+            "console": "integratedTerminal",
+            "consoleName": "WebUI Service",
+            "justMyCode": false,
+        },
+        {
+            "name": "Index Service",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/index_service/startup.py",
+            "console": "integratedTerminal",
+            "consoleName": "Index Service",
+            "justMyCode": false,
+        },
+        {
+            "name": "Agent Service",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/agent_service/startup.py",
+            "console": "integratedTerminal",
+            "consoleName": "Agent Service",
+            "justMyCode": false
+        },
+        {
+            "name": ".NET Service",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/csharp_analysis_service/AnalysisService/bin/Debug/net8.0/AnalysisService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart",
+            "justMyCode": false,
+            "preLaunchTask": "build-dotnet-service"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Run All in Sequence",
+            "configurations": [
+                "WebUI",
+                "Index Service",
+                "Agent Service",
+                ".NET Service"
+            ],
+            "preLaunchTask": "init-services-port"
+        }
+    ]
+}

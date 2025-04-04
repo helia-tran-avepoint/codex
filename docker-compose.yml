@@ -1,0 +1,102 @@
+version: "3.9"
+services:
+  webui:
+    build:
+      context: .
+      dockerfile: ./webui/Dockerfile
+      args:
+        BUILD_ENV: dev
+    image: webui:1.0.0-dev-20250117
+    ports:
+      - 8501:8501
+    depends_on:
+      - agent_service
+    networks:
+      - app-network
+    volumes:
+      - shared-volume:/app/shared_data
+
+  agent_service:
+    build:
+      context: .
+      dockerfile: ./agent_service/Dockerfile
+    image: agent-service:1.0.0-dev-20250117
+    ports:
+      - 8001:8001
+      - 8004:8004
+    depends_on:
+      - index_service
+    networks:
+      - app-network
+    volumes:
+      - shared-volume:/app/shared_data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+
+  index_service:
+    build:
+      context: .
+      dockerfile: ./index_service/Dockerfile
+    image: index-service:1.0.0-dev-20250117
+    ports:
+      - 8002:8002
+    networks:
+      - app-network
+    volumes:
+      - shared-volume:/app/shared_data
+      - /home/share/codex_transform_cache:/app/transform_cache
+
+  analysis_service:
+    build:
+      context: ./csharp_analysis_service
+      dockerfile: ./AnalysisService/Dockerfile
+    image: analysis-service:1.0.0-dev-20250117
+    ports:
+      - 8003:8003
+    networks:
+      - app-network
+    volumes:
+      - shared-volume:/app/shared_data
+
+  # neo4j:
+  #   image: neo4j:5.12
+  #   container_name: neo4j
+  #   ports:
+  #     - "7474:7474"
+  #     - "7687:7687"
+  #   environment:
+  #     - NEO4J_AUTH=neo4j/password
+  #   volumes:
+  #     - ./neo4j/data:/data
+  #     - ./neo4j/logs:/logs
+  #     - ./neo4j/import:/import
+
+    # python:
+    #   build:
+    #     context: ./backend
+    #   container_name: web
+    #   ports:
+    #     - "8000:8000"
+    #   volumes:
+    #     - ./sqlite:/app/sqlite
+    #   depends_on:
+    #     - neo4j
+
+    # llm:
+    #   build:
+    #     context: ./llm
+    #   container_name: llm_service
+    #   ports:
+    #     - "8501:8501"
+
+
+networks:
+  app-network:
+
+volumes:
+  shared-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/share/codex_shared_storage

@@ -1,0 +1,15 @@
+*/.venv
+*/__pycache__
+# .vscode
+*/.vscode
+.cache
+shared_data/*
+tmp/
+test/
+docker_excutor_work_dir/
+logs/
+csharp_analysis_service/.vs/
+csharp_analysis_service/AnalysisService/bin/
+csharp_analysis_service/AnalysisService/obj/
+*/*.log
+transform_cache

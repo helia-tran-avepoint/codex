@@ -1,0 +1,9 @@
+@AnalysisServiceHostAddress = http://localhost:8003
+
+Post {{AnalysisServiceHostAddress}}/analysis/
+Content-Type: application/json
+
+{
+  "Path": "C:\\Users\\ce.liu\\Documents\\Workspace\\NET TEST\\codex 2.x\\codex\\csharp_analysis_service\\AnalysisService"
+}
+###

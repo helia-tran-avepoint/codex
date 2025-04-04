@@ -1,0 +1,9 @@
+FROM neuralnetx.azurecr.io/python:3-slim
+
+WORKDIR /app
+
+RUN pip install numpy pandas requests matplotlib scikit-learn openpyxl pyyaml jsonschema yfinance
+
+ENV HTTP_PROXY=http://ce.liu:1qaz2wsx!%40AII@avejpproxy.avepoint.com:56789/
+ENV HTTPS_PROXY=http://ce.liu:1qaz2wsx!%40AII@avejpproxy.avepoint.com:56789/
+ENV NO_PROXY=localhost,127.0.0.1,.avepoint.com,10.1.71.1
